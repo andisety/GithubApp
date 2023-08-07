@@ -22,7 +22,7 @@ class ProfileActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         val projects = listOf(
-            Project(R.drawable.apk_github,"https://github.com/AndreMaulaRaufiq/ProtecMe"),
+            Project(R.drawable.apk_github,"https://github.com/andisety/GithubApp"),
             Project(R.drawable.epatrol,"https://github.com/andisety/E-Patrol"),
             Project(R.drawable.protectme,"https://github.com/AndreMaulaRaufiq/ProtecMe"),
             Project(R.drawable.nutripal,"https://github.com/C23PR533/NutriPal-Android"),
