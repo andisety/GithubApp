@@ -1,0 +1,20 @@
+<resources>
+    <string name="app_name">Github User Application</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="following">Following</string>
+    <string name="repository">Repository</string>
+    <string name="followers">Followers</string>
+    <string name="search">search</string>
+    <string name="subTitle">23,4 million more developers available around the world</string>
+    <string name="title">Find your developers to make the world more intelegent!</string>
+    <string name="data_not_found">Data Not Found</string>
+    <string name="setting">Setting</string>
+    <string name="dark_mode">Dark Mode</string>
+    <string name="delete_all">Delete All</string>
+    <string name="andi_setyo_purnomo">Andi Setyo Purnomo</string>
+    <string name="purnomoandi126_gmail_com">purnomoandi126@gmail.com</string>
+    <string name="project">Project</string>
+    <string name="profile">profile</string>
+    <string name="favorite">Favorite</string>
+</resources>
