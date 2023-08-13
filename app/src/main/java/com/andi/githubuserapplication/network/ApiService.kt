@@ -4,13 +4,16 @@ import com.andi.githubuserapplication.model.response.SearchResponse
 import com.andi.githubuserapplication.model.response.UserResponseDetail
 import com.andi.githubuserapplication.model.response.UsersResponse
 import retrofit2.Call
+import retrofit2.Response
 import retrofit2.http.*
 
 interface ApiService {
 
-companion object;
+companion object{
+    const val BASE_URL = "https://api.github.com/"
+}
     @GET("users")
-    fun getUsers():Call<UsersResponse>
+    suspend fun getUsers():Response<UsersResponse>
 
     @GET("users/{username}")
     fun getUserDetail(

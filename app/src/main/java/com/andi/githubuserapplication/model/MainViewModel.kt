@@ -38,31 +38,31 @@ class MainViewModel : ViewModel() {
 
 
     init {
-        getUsers()
+//        getUsers()
     }
 
-    private fun getUsers()   {
-        _isLoading.value = true
-
-        val client = ApiConfig.getApiService().getUsers()
-        client.enqueue(object: Callback<UsersResponse>{
-            override fun onResponse(call: Call<UsersResponse>, response: Response<UsersResponse>) {
-                if (response.isSuccessful){
-
-                    _isLoading.value = false
-                    _users.value = response.body()
-                }
-            }
-
-            override fun onFailure(call: Call<UsersResponse>, t: Throwable) {
-                Log.e(GET_USER,t.toString())
-                _isLoading.value = false
-            }
-
-        })
-
-
-    }
+//    private fun getUsers()   {
+//        _isLoading.value = true
+//
+//        val client = ApiConfig.getApiService().getUsers()
+//        client.enqueue(object: Callback<UsersResponse>{
+//            override fun onResponse(call: Call<UsersResponse>, response: Response<UsersResponse>) {
+//                if (response.isSuccessful){
+//
+//                    _isLoading.value = false
+//                    _users.value = response.body()
+//                }
+//            }
+//
+//            override fun onFailure(call: Call<UsersResponse>, t: Throwable) {
+//                Log.e(GET_USER,t.toString())
+//                _isLoading.value = false
+//            }
+//
+//        })
+//
+//
+//    }
 
      fun getUserDetail(username:String){
          _isLoading.value = true

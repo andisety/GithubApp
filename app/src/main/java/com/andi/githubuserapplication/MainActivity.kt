@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.appcompat.widget.SearchView
@@ -15,6 +16,7 @@ import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.preferencesDataStore
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.andi.githubuserapplication.adapter.AdapterHome
 import com.andi.githubuserapplication.adapter.AdapterUser
 import com.andi.githubuserapplication.databinding.ActivityMainBinding
 import com.andi.githubuserapplication.model.MainViewModel
@@ -25,11 +27,17 @@ import com.andi.githubuserapplication.setting.ViewModelFactory
 import com.andi.githubuserapplication.setting.ViewModelSetting
 import com.andi.githubuserapplication.ui.detail.DetaiActivity
 import com.andi.githubuserapplication.ui.favorite.FavoriteActivity
+import com.andi.githubuserapplication.ui.home.HomeViewModel
 import com.andi.githubuserapplication.ui.profile.ProfileActivity
+import dagger.hilt.android.AndroidEntryPoint
 
 private val Context.dataStore: DataStore<Preferences> by  preferencesDataStore(name = "settings")
+
+@AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
+    private val viewModel:HomeViewModel by viewModels()
+    private lateinit var adapterHome: AdapterHome
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -49,6 +57,7 @@ class MainActivity : AppCompatActivity() {
                 AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
             }
         }
+        setupRv()
 
         mainModel.users.observe(this){users ->
             setDataUsers(users)
@@ -58,6 +67,17 @@ class MainActivity : AppCompatActivity() {
         }
         mainModel.isLoading.observe(this){isloading->
             showLoading(isloading)
+        }
+    }
+
+    private fun setupRv() {
+        adapterHome = AdapterHome()
+        binding.rcList.apply {
+            adapter = adapterHome
+            layoutManager = LinearLayoutManager(this@MainActivity,LinearLayoutManager.VERTICAL,false)
+        }
+        viewModel.response.observe(this){users->
+            adapterHome.users = users
         }
     }
 
