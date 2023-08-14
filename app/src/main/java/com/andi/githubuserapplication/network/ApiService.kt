@@ -16,24 +16,24 @@ companion object{
     suspend fun getUsers():Response<UsersResponse>
 
     @GET("users/{username}")
-    fun getUserDetail(
+    suspend fun getUserDetail(
         @Path("username") username:String
-    ):Call<UserResponseDetail>
+    ):Response<UserResponseDetail>
 
     @GET("users/{username}/followers")
-    fun getFollowers(
+    suspend fun getFollowers(
         @Path("username") username: String
-    ):Call<UsersResponse>
+    ):Response<UsersResponse>
 
     @GET("users/{username}/following")
-    fun getFollowing(
+    suspend fun getFollowing(
         @Path("username") username: String
-    ):Call<UsersResponse>
+    ):Response<UsersResponse>
 
     @GET("search/users{username}")
-    fun getUsersSearch(
+    suspend fun getUsersSearch(
         @Path("username") username : String,
         @Query("q")q:String
 
-    ):Call<SearchResponse>
+    ):Response<SearchResponse>
 }

@@ -8,23 +8,24 @@ import android.view.View
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.ViewModelProvider
 import com.andi.githubuserapplication.MainActivity
 import com.andi.githubuserapplication.R
 import com.andi.githubuserapplication.databinding.ActivityDetaiBinding
 import com.andi.githubuserapplication.model.FavoriteViewModel
-import com.andi.githubuserapplication.model.MainViewModel
 import com.andi.githubuserapplication.model.response.UserResponseDetail
+import com.andi.githubuserapplication.network.ApiResult
 import com.andi.githubuserapplication.ui.ViewModelFactory
 import com.bumptech.glide.Glide
 import com.google.android.material.tabs.TabLayoutMediator
+import dagger.hilt.android.AndroidEntryPoint
 
+
+@AndroidEntryPoint
 class DetaiActivity : AppCompatActivity() {
 
     private var isFavorite:Boolean = false
     lateinit var favorite:UserResponseDetail
-
-
+    private val detailViewModel:DetailViewModel by viewModels()
     private lateinit var binding:ActivityDetaiBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -36,15 +37,21 @@ class DetaiActivity : AppCompatActivity() {
         supportActionBar?.title=username
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
-
-       val mainModel  = ViewModelProvider(this,ViewModelProvider.NewInstanceFactory())[MainViewModel::class.java]
-        mainModel.isLoading.observe(this){isloading->
-            showLoading(isloading)
-        }
-        mainModel.getUserDetail(username!!)
-        mainModel.userDetail.observe(this){userDetail->
-            setDetailUser(userDetail)
-            favorite = userDetail
+        detailViewModel.getUser(username!!)
+        detailViewModel.userDetail.observe(this){detail->
+            when(detail){
+                is ApiResult.Loading->{
+                    showLoading(true)
+                }
+                is ApiResult.Error->{
+                    showLoading(false)
+                }
+                is ApiResult.Success->{
+                    showLoading(false)
+                    setDetailUser(detail.data)
+                    favorite = detail.data
+                }
+            }
         }
 
         val factory : ViewModelFactory = ViewModelFactory.getInstance(this)
@@ -85,6 +92,7 @@ class DetaiActivity : AppCompatActivity() {
 
 
     }
+
 
     private fun setDetailUser(user:UserResponseDetail?) {
 

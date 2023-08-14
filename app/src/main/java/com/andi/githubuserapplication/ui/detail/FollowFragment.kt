@@ -1,29 +1,39 @@
 package com.andi.githubuserapplication.ui.detail
 
-import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ProgressBar
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
+import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.andi.githubuserapplication.MainActivity
 import com.andi.githubuserapplication.R
-import com.andi.githubuserapplication.adapter.AdapterUser
-import com.andi.githubuserapplication.model.MainViewModel
-import com.andi.githubuserapplication.model.response.UsersResponse
+import com.andi.githubuserapplication.adapter.AdapterHome
+import com.andi.githubuserapplication.databinding.FragmentFollowBinding
+import com.andi.githubuserapplication.model.response.UserResponse
+import com.andi.githubuserapplication.network.ApiResult
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class FollowFragment : Fragment() {
+
+    private var _binding: FragmentFollowBinding? = null
+    private val binding get() = _binding!!
     private lateinit var rcList:RecyclerView
     private lateinit var progressBar:ProgressBar
+    private val detailViewModel:DetailViewModel by viewModels()
+    private lateinit var adapterHome: AdapterHome
+
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.fragment_follow, container, false)
+        _binding = FragmentFollowBinding.inflate(inflater,container,false)
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -32,28 +42,37 @@ class FollowFragment : Fragment() {
         progressBar.visibility = View.VISIBLE
         val username = arguments?.getString(MainActivity.DATA)
 
-        val mainModel=ViewModelProvider(this)[MainViewModel::class.java]
-        mainModel.getFollowers(username!!)
-        mainModel.followers.observe(viewLifecycleOwner){followers ->
-            setDataUsers(followers)
+        detailViewModel.getFollower(username!!)
+        detailViewModel.followers.observe(viewLifecycleOwner){follower->
+            when(follower){
+                is ApiResult.Loading->{
+                    showLoading(true)
+                }
+                is ApiResult.Error->{
+                    showLoading(false)
+                }
+                is ApiResult.Success->{
+                    showLoading(false)
+                    setupRv(follower.data)
+                }
+            }
         }
     }
-
+    private fun showLoading(isLoading: Boolean) {
+        binding.progressBar.visibility = if (isLoading) View.VISIBLE else View.GONE
+    }
     private fun initView(view: View){
         rcList = view.findViewById(R.id.rcList)
         progressBar = view.findViewById(R.id.progressBar)
     }
-    private fun setDataUsers(users:UsersResponse){
-        val userAdapter = AdapterUser(users,requireContext(),object: AdapterUser.OnAdapterListener{
-            override fun itemClick(username: String) {
-                val intent = Intent(requireContext(), DetaiActivity::class.java)
-                intent.putExtra(MainActivity.DATA,username)
-                startActivity(intent)
-            }
-        })
-        rcList.adapter = userAdapter
-        rcList.layoutManager = LinearLayoutManager(requireContext())
-        progressBar.visibility = View.GONE
+    private fun setupRv(users:List<UserResponse>) {
+        adapterHome = AdapterHome()
+        adapterHome.users = users
+        binding.rcList.apply {
+            adapter = adapterHome
+            layoutManager = LinearLayoutManager(activity,LinearLayoutManager.VERTICAL,false)
+        }
+
     }
 
 }

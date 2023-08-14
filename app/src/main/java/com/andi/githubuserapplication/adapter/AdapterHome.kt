@@ -1,5 +1,7 @@
 package com.andi.githubuserapplication.adapter
 
+import android.app.Activity
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.AsyncListDiffer
@@ -8,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.andi.githubuserapplication.databinding.ItemUserBinding
 import com.andi.githubuserapplication.model.response.UserResponse
 import com.andi.githubuserapplication.model.response.UsersResponse
+import com.andi.githubuserapplication.ui.detail.DetaiActivity
 import com.bumptech.glide.Glide
 
 class AdapterHome:RecyclerView.Adapter<AdapterHome.ViewHolder>() {
@@ -49,9 +52,12 @@ class AdapterHome:RecyclerView.Adapter<AdapterHome.ViewHolder>() {
             tvName.text = currentUser.login
             tvUser.text = currentUser.type
 
-//            holder.itemView.setOnClickListener {
-//                listener.itemClick(user.login)
-//            }
+        }
+        val context = holder.itemView.context
+        holder.itemView.setOnClickListener {
+            val intent = Intent(holder.itemView.context, DetaiActivity::class.java)
+            intent.putExtra("DATA",currentUser.login)
+            context.startActivity(intent)
         }
 
     }
