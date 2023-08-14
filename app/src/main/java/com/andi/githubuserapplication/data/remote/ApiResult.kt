@@ -1,4 +1,4 @@
-package com.andi.githubuserapplication.network
+package com.andi.githubuserapplication.data.remote
 
 sealed class ApiResult<out T> {
     data class Success<out T>(val data: T) : ApiResult<T>()

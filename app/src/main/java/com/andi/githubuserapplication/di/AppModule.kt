@@ -1,7 +1,12 @@
 package com.andi.githubuserapplication.di
 
+import android.app.Application
+import android.content.Context
 import com.andi.githubuserapplication.BuildConfig
+import com.andi.githubuserapplication.data.local.room.UserDao
+import com.andi.githubuserapplication.data.local.room.UserDatabase
 import com.andi.githubuserapplication.network.ApiService
+import com.andi.githubuserapplication.utils.AppExecutors
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -41,12 +46,26 @@ object AppModule {
         }
     }
 
-//    @Provides
-//    @Singleton
-//    fun provideRetrofit():ApiService=
-//        Retrofit.Builder()
-//            .baseUrl(ApiService.BASE_URL)
-//            .addConverterFactory(GsonConverterFactory.create())
-//            .build()
-//            .create(ApiService::class.java)
+    @Provides
+    @Singleton
+    fun provideContext(application: Application): Context {
+        return application
+    }
+
+    @Provides
+    @Singleton
+    fun getDb(context:Context):UserDatabase{
+        return UserDatabase.getInstance(context)
+    }
+    @Provides
+    @Singleton
+    fun getDao(userDatabase: UserDatabase):UserDao{
+        return userDatabase.userDao()
+    }
+    @Provides
+    @Singleton
+    fun getAppExecutor(): AppExecutors {
+        return AppExecutors()
+    }
+
 }

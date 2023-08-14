@@ -1,4 +1,4 @@
-package com.andi.githubuserapplication.model.response
+package com.andi.githubuserapplication.data.remote.response
 
 
 import com.google.gson.annotations.Expose

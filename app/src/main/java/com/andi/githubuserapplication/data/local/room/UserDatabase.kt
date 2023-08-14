@@ -1,4 +1,4 @@
-package com.andi.githubuserapplication.data.room
+package com.andi.githubuserapplication.data.local.room
 
 import android.content.Context
 import androidx.room.Database
@@ -9,7 +9,7 @@ import com.andi.githubuserapplication.data.local.entity.UserEntity
 @Database(entities = [UserEntity::class], version = 1, exportSchema = false)
 abstract class UserDatabase: RoomDatabase() {
 
-    abstract fun userDao():UserDao
+    abstract fun userDao(): UserDao
 
     companion object {
         @Volatile

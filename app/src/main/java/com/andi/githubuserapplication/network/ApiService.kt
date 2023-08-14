@@ -1,9 +1,8 @@
 package com.andi.githubuserapplication.network
 
-import com.andi.githubuserapplication.model.response.SearchResponse
-import com.andi.githubuserapplication.model.response.UserResponseDetail
-import com.andi.githubuserapplication.model.response.UsersResponse
-import retrofit2.Call
+import com.andi.githubuserapplication.data.remote.response.SearchResponse
+import com.andi.githubuserapplication.data.remote.response.UserResponseDetail
+import com.andi.githubuserapplication.data.remote.response.UsersResponse
 import retrofit2.Response
 import retrofit2.http.*
 

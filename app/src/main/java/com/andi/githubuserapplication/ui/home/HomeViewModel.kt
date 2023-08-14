@@ -1,18 +1,16 @@
 package com.andi.githubuserapplication.ui.home
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.andi.githubuserapplication.model.response.UsersResponse
-import com.andi.githubuserapplication.repository.GithubRepository
-import dagger.hilt.android.scopes.ViewModelScoped
-import javax.inject.Inject
 import androidx.lifecycle.viewModelScope
-import com.andi.githubuserapplication.model.response.SearchResponse
-import com.andi.githubuserapplication.network.ApiResult
+import com.andi.githubuserapplication.data.remote.ApiResult
+import com.andi.githubuserapplication.data.remote.response.SearchResponse
+import com.andi.githubuserapplication.data.remote.response.UsersResponse
+import com.andi.githubuserapplication.repository.GithubRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
 @HiltViewModel
 class HomeViewModel @Inject constructor(private val repository: GithubRepository):ViewModel() {

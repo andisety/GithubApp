@@ -17,9 +17,9 @@ import androidx.datastore.preferences.preferencesDataStore
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.andi.githubuserapplication.adapter.AdapterHome
+import com.andi.githubuserapplication.data.remote.ApiResult
+import com.andi.githubuserapplication.data.remote.response.UserResponse
 import com.andi.githubuserapplication.databinding.ActivityMainBinding
-import com.andi.githubuserapplication.model.response.UserResponse
-import com.andi.githubuserapplication.network.ApiResult
 import com.andi.githubuserapplication.setting.SettingActivity
 import com.andi.githubuserapplication.setting.SettingPreferences
 import com.andi.githubuserapplication.setting.ViewModelFactory
@@ -66,7 +66,6 @@ class MainActivity : AppCompatActivity() {
                 }
             }
         }
-
         viewModel.search.observe(this@MainActivity){users ->
             binding.apply {
                 ivTitle.visibility = View.VISIBLE

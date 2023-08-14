@@ -1,13 +1,13 @@
-package com.andi.githubuserapplication.data
+package com.andi.githubuserapplication.repository
 
 import androidx.lifecycle.LiveData
 import com.andi.githubuserapplication.data.local.entity.UserEntity
-import com.andi.githubuserapplication.data.room.UserDao
-import com.andi.githubuserapplication.model.response.UserResponseDetail
+import com.andi.githubuserapplication.data.local.room.UserDao
+import com.andi.githubuserapplication.data.remote.response.UserResponseDetail
 import com.andi.githubuserapplication.utils.AppExecutors
+import javax.inject.Inject
 
-
-class GithubRepository private constructor(
+class RoomRepository @Inject constructor(
     private val userDao: UserDao,
     private val appExecutors: AppExecutors
 ) {
@@ -29,8 +29,8 @@ class GithubRepository private constructor(
         }
     }
 
-    fun getuser(login:String):LiveData<Boolean>{
-            return userDao.isUserFavorite(login)
+    fun getuser(login:String): LiveData<Boolean> {
+        return userDao.isUserFavorite(login)
     }
 
     fun deleteUser(login:String){
@@ -39,17 +39,4 @@ class GithubRepository private constructor(
         }
     }
 
-
-
-    companion object {
-        @Volatile
-        private var instance: GithubRepository? = null
-        fun getInstance(
-            newsDao: UserDao,
-            appExecutors: AppExecutors
-        ): GithubRepository =
-            instance ?: synchronized(this) {
-                instance ?: GithubRepository(newsDao, appExecutors)
-            }.also { instance = it }
-    }
 }

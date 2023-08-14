@@ -12,12 +12,14 @@ import com.andi.githubuserapplication.MainActivity
 import com.andi.githubuserapplication.R
 import com.andi.githubuserapplication.adapter.AdapterUserRoomEdit
 import com.andi.githubuserapplication.data.local.entity.UserEntity
-import com.andi.githubuserapplication.model.FavoriteViewModel
-import com.andi.githubuserapplication.ui.ViewModelFactory
+import com.andi.githubuserapplication.model.RoomViewModel
 import com.andi.githubuserapplication.ui.detail.DetaiActivity
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class FavoriteActivity : AppCompatActivity() {
     private lateinit var rcFav:RecyclerView
+    private val roomViewModel: RoomViewModel by viewModels()
     @SuppressLint("MissingInflatedId")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -27,13 +29,8 @@ class FavoriteActivity : AppCompatActivity() {
         setContentView(R.layout.activity_favorite)
          rcFav= findViewById(R.id.rcFavorite)
 
-        val factory : ViewModelFactory = ViewModelFactory.getInstance(this)
-        val favViewModel: FavoriteViewModel by  viewModels{
-            factory
-        }
 
-
-        favViewModel.getFavorite().observe(this){result->
+        roomViewModel.getFavorite().observe(this){result->
             setDataUsers(result)
 
         }

@@ -1,15 +1,13 @@
 package com.andi.githubuserapplication.adapter
 
-import android.app.Activity
 import android.content.Intent
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
+import com.andi.githubuserapplication.data.remote.response.UserResponse
 import com.andi.githubuserapplication.databinding.ItemUserBinding
-import com.andi.githubuserapplication.model.response.UserResponse
-import com.andi.githubuserapplication.model.response.UsersResponse
 import com.andi.githubuserapplication.ui.detail.DetaiActivity
 import com.bumptech.glide.Glide
 

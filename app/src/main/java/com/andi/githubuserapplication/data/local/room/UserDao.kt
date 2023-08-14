@@ -1,4 +1,4 @@
-package com.andi.githubuserapplication.data.room
+package com.andi.githubuserapplication.data.local.room
 
 import androidx.lifecycle.LiveData
 import androidx.room.*

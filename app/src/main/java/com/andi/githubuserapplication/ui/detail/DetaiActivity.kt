@@ -10,11 +10,10 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import com.andi.githubuserapplication.MainActivity
 import com.andi.githubuserapplication.R
+import com.andi.githubuserapplication.data.remote.ApiResult
+import com.andi.githubuserapplication.data.remote.response.UserResponseDetail
 import com.andi.githubuserapplication.databinding.ActivityDetaiBinding
-import com.andi.githubuserapplication.model.FavoriteViewModel
-import com.andi.githubuserapplication.model.response.UserResponseDetail
-import com.andi.githubuserapplication.network.ApiResult
-import com.andi.githubuserapplication.ui.ViewModelFactory
+import com.andi.githubuserapplication.model.RoomViewModel
 import com.bumptech.glide.Glide
 import com.google.android.material.tabs.TabLayoutMediator
 import dagger.hilt.android.AndroidEntryPoint
@@ -24,8 +23,9 @@ import dagger.hilt.android.AndroidEntryPoint
 class DetaiActivity : AppCompatActivity() {
 
     private var isFavorite:Boolean = false
-    lateinit var favorite:UserResponseDetail
+    lateinit var favorite: UserResponseDetail
     private val detailViewModel:DetailViewModel by viewModels()
+    private val roomViewModel:RoomViewModel by viewModels()
     private lateinit var binding:ActivityDetaiBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -54,19 +54,14 @@ class DetaiActivity : AppCompatActivity() {
             }
         }
 
-        val factory : ViewModelFactory = ViewModelFactory.getInstance(this)
-        val favViewModel:FavoriteViewModel by  viewModels{
-            factory
-        }
 
 
-
-       favViewModel.getUserFav(username).observe(this) { userFav ->
+        roomViewModel.getUserFav(username).observe(this) { userFav ->
            if (userFav) {
                binding.ivFavorite.setImageResource(R.drawable.ic_baseline_favorite_24)
                isFavorite = true
                binding.ivFavorite.setOnClickListener {
-                   favViewModel.delete(username)
+                   roomViewModel.delete(username)
                    isFavorite = false
                    Toast.makeText(applicationContext,"Removed",Toast.LENGTH_SHORT).show()
                }
@@ -74,7 +69,7 @@ class DetaiActivity : AppCompatActivity() {
                isFavorite = false
                binding.ivFavorite.setImageResource(R.drawable.ic_baseline_favorite_border_24)
                binding.ivFavorite.setOnClickListener {
-                   favViewModel.addFavorite(favorite)
+                   roomViewModel.addFavorite(favorite)
                    isFavorite = true
                    Toast.makeText(applicationContext,"Added",Toast.LENGTH_SHORT).show()
                }
@@ -94,7 +89,7 @@ class DetaiActivity : AppCompatActivity() {
     }
 
 
-    private fun setDetailUser(user:UserResponseDetail?) {
+    private fun setDetailUser(user: UserResponseDetail?) {
 
         binding.apply {
             tvName.text = user?.name

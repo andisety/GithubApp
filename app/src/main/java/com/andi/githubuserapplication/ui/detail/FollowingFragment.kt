@@ -10,9 +10,9 @@ import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.andi.githubuserapplication.MainActivity
 import com.andi.githubuserapplication.adapter.AdapterHome
+import com.andi.githubuserapplication.data.remote.ApiResult
+import com.andi.githubuserapplication.data.remote.response.UserResponse
 import com.andi.githubuserapplication.databinding.FragmentFollowingBinding
-import com.andi.githubuserapplication.model.response.UserResponse
-import com.andi.githubuserapplication.network.ApiResult
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
